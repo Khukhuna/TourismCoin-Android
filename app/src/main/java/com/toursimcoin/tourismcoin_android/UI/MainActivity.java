@@ -3,9 +3,6 @@ package com.toursimcoin.tourismcoin_android.UI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,11 +11,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.toursimcoin.tourismcoin_android.R;
 import com.toursimcoin.tourismcoin_android.heplers.Constants;
 import com.toursimcoin.tourismcoin_android.heplers.SharedPrefsUtil;
+
+import in.mrasif.libs.easyqr.EasyQR;
+import in.mrasif.libs.easyqr.QRScanner;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -48,6 +50,13 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        findViewById(R.id.main_qr_wrapper).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scanQR();
+            }
+        });
 
         navigationView.setNavigationItemSelectedListener(this);
     }
@@ -81,6 +90,9 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
+        if(id == R.id.nav_scanner){
+            scanQR();
+        }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -97,5 +109,21 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void scanQR(){
+        Intent intent=new Intent(MainActivity.this, QRScanner.class);
+        startActivityForResult(intent, EasyQR.QR_SCANNER_REQUEST);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case EasyQR.QR_SCANNER_REQUEST: {
+                if (resultCode==RESULT_OK){
+                    Toast.makeText(this, data.getStringExtra(EasyQR.DATA), Toast.LENGTH_SHORT).show();
+                }
+            } break;
+        }
     }
 }
