@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Tourist Token App </string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Tourist Token</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -12,4 +12,8 @@
     <string name="sign_in">Sign in</string>
     <string name="recover">Recover</string>
     <string name="sign_up">Sign up</string>
+    <string name="sign_out">Sign out</string>
+    <string name="settings">Settings</string>
+    <string name="scan">Scan the QR</string>
+    <string name="citys">Citys</string>
 </resources>

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.toursimcoin.tourismcoin_android.R;
+import com.toursimcoin.tourismcoin_android.heplers.Constants;
 import com.toursimcoin.tourismcoin_android.heplers.SharedPrefsUtil;
 import com.toursimcoin.tourismcoin_android.model.ApiResponse;
 import com.toursimcoin.tourismcoin_android.model.Credentials;
@@ -87,10 +88,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 if(response.body() != null){
                     User user = response.body();
-                    SharedPrefsUtil.setStringPreference(context, "username", user.getUsername());
-                    SharedPrefsUtil.setStringPreference(context, "email", user.getEmail());
-                    SharedPrefsUtil.setStringPreference(context, "first_name", user.getFirstName());
-                    SharedPrefsUtil.setStringPreference(context, "last_name", user.getLastName());
+                    SharedPrefsUtil.setStringPreference(context, Constants.USERNAME, user.getUsername());
+                    SharedPrefsUtil.setStringPreference(context, Constants.MAIL, user.getEmail());
+                    SharedPrefsUtil.setStringPreference(context, Constants.FIRSTNAME, user.getFirstName());
+                    SharedPrefsUtil.setStringPreference(context, Constants.LASTNAME, user.getLastName());
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
                 }
