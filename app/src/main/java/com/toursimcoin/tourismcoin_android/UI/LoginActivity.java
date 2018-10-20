@@ -1,13 +1,17 @@
-package com.toursimcoin.tourismcoin_android;
+package com.toursimcoin.tourismcoin_android.UI;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
-import com.toursimcoin.tourismcoin_android.UI.MainActivity;
+import com.toursimcoin.tourismcoin_android.R;
 import com.toursimcoin.tourismcoin_android.heplers.SharedPrefsUtil;
 import com.toursimcoin.tourismcoin_android.model.ApiResponse;
 import com.toursimcoin.tourismcoin_android.model.Credentials;
@@ -24,6 +28,13 @@ public class LoginActivity extends AppCompatActivity {
 
     TourismCoinService service;
 
+    Button signInBtn;
+
+    TextInputEditText username;
+    TextInputEditText password;
+
+    ProgressDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +47,18 @@ public class LoginActivity extends AppCompatActivity {
 
         service = retrofit.create(TourismCoinService.class);
 
-        signIn("khabib1231", "khabib123");
+        username = findViewById(R.id.login_username);
+        password = findViewById(R.id.login_password);
+
+        signInBtn = findViewById(R.id.sign_in);
+        signInBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signIn(username.getText().toString(), password.getText().toString());
+                changeButtonStatus(false);
+            }
+        });
+        
 
     }
 
@@ -53,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
                 Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                changeButtonStatus(true);
             }
         });
     }
@@ -69,13 +92,25 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPrefsUtil.setStringPreference(context, "first_name", user.getFirstName());
                     SharedPrefsUtil.setStringPreference(context, "last_name", user.getLastName());
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
                 }
+                changeButtonStatus(true);
             }
 
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                 Toast.makeText(LoginActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                changeButtonStatus(true);
             }
         });
+    }
+
+    public void changeButtonStatus(boolean status){
+        signInBtn.setClickable(status);
+        if(!status){
+            dialog = ProgressDialog.show(this , "", "Loading. Please wait...", false);
+        }else{
+            dialog.dismiss();
+        }
     }
 }
