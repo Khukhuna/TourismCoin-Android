@@ -46,6 +46,11 @@ public class LoginActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        if(SharedPrefsUtil.getStringPreference(this, Constants.USERNAME) != null){
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+        }
+
         service = retrofit.create(TourismCoinService.class);
 
         username = findViewById(R.id.login_username);
