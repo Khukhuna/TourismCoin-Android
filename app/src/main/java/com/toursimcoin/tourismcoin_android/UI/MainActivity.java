@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.toursimcoin.tourismcoin_android.R;
 import com.toursimcoin.tourismcoin_android.adapters.SightseeingAdapter;
+import com.toursimcoin.tourismcoin_android.heplers.CoinsListener;
 import com.toursimcoin.tourismcoin_android.heplers.Constants;
 import com.toursimcoin.tourismcoin_android.heplers.SharedPrefsUtil;
 import com.toursimcoin.tourismcoin_android.model.QRStatus;
@@ -40,7 +41,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, CoinsListener {
 
     TextView nameLabel;
     TextView emailLabel;
@@ -49,12 +50,13 @@ public class MainActivity extends AppCompatActivity
     private SightseeingAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -180,9 +182,18 @@ public class MainActivity extends AppCompatActivity
                 if (resultCode==RESULT_OK){
                     Gson gson = new Gson();
                     QRStatus status = gson.fromJson(data.getStringExtra(EasyQR.DATA), QRStatus.class);
-                    
+                    mAdapter.checkItem(status.getTitle().trim(), this);
                 }
             } break;
         }
+    }
+
+    @Override
+    public void addCoin(String title, int points) {
+        Menu menu = toolbar.getMenu();
+        MenuItem balanceBar = menu.getItem(1);
+        int balance = Integer.valueOf(balanceBar.getTitle().toString());
+        balance = balance + points;
+        balanceBar.setTitle(String.valueOf(balance));
     }
 }
