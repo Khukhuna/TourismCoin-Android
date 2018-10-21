@@ -27,6 +27,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
 
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+
     implementation 'com.github.mrasif:easyqrlibrary:v1.0.0'
     implementation 'com.android.support:multidex:1.0.3'
 

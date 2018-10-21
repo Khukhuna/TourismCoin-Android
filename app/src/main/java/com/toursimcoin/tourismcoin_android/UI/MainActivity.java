@@ -8,6 +8,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,20 +19,36 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.toursimcoin.tourismcoin_android.R;
+import com.toursimcoin.tourismcoin_android.adapters.SightseeingAdapter;
 import com.toursimcoin.tourismcoin_android.heplers.Constants;
 import com.toursimcoin.tourismcoin_android.heplers.SharedPrefsUtil;
 import com.toursimcoin.tourismcoin_android.model.QRStatus;
+import com.toursimcoin.tourismcoin_android.model.Sightseeing;
+import com.toursimcoin.tourismcoin_android.network.TourismCoinService;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import in.mrasif.libs.easyqr.EasyQR;
 import in.mrasif.libs.easyqr.QRScanner;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView nameLabel;
     TextView emailLabel;
+
+    private RecyclerView mRecyclerView;
+    private SightseeingAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +59,38 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
+
+        mRecyclerView = findViewById(R.id.ccrecycler);
+        mRecyclerView.setHasFixedSize(true);
+
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        mAdapter = new SightseeingAdapter(new ArrayList<Sightseeing>());
+        mRecyclerView.setAdapter(mAdapter);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://shielded-bastion-73886.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        TourismCoinService service = retrofit.create(TourismCoinService.class);
+
+        service.getSightseeings().enqueue(new Callback<List<Sightseeing>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Sightseeing>> call, @NonNull Response<List<Sightseeing>> response) {
+                List<Sightseeing> data = response.body();
+                if(data != null){
+                    mAdapter.addItems(data);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Sightseeing>> call, @NonNull Throwable t) {
+
+            }
+        });
+
 
         nameLabel = headerView.findViewById(R.id.navbar_name);
         emailLabel = headerView.findViewById(R.id.navbar_mail);

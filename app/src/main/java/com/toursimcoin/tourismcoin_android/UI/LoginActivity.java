@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://intense-brushlands-86787.herokuapp.com/")
+                .baseUrl("https://shielded-bastion-73886.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
