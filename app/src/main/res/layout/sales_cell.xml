@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="20dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="175dp"
+        android:id="@+id/sales_image"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:background="#90000000"
+        android:gravity="start"
+        android:text=""
+        android:padding="10dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:id="@+id/sales_title"
+        app:layout_constraintBottom_toBottomOf="@id/sales_image"/>
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:text="120"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:layout_marginEnd="20dp"
+        android:drawableEnd="@drawable/ic_monetization"
+        app:layout_constraintRight_toRightOf="@id/sales_title"
+        app:layout_constraintBottom_toBottomOf="@id/sales_title"
+        app:layout_constraintTop_toTopOf="@id/sales_title"
+        android:id="@+id/sales_buy"
+        android:background="@null"
+        />
+
+</android.support.constraint.ConstraintLayout>

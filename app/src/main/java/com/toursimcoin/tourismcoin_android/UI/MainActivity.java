@@ -22,11 +22,13 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.toursimcoin.tourismcoin_android.R;
+import com.toursimcoin.tourismcoin_android.adapters.SalesAdapter;
 import com.toursimcoin.tourismcoin_android.adapters.SightseeingAdapter;
 import com.toursimcoin.tourismcoin_android.heplers.CoinsListener;
 import com.toursimcoin.tourismcoin_android.heplers.Constants;
 import com.toursimcoin.tourismcoin_android.heplers.SharedPrefsUtil;
 import com.toursimcoin.tourismcoin_android.model.QRStatus;
+import com.toursimcoin.tourismcoin_android.model.Sale;
 import com.toursimcoin.tourismcoin_android.model.Sightseeing;
 import com.toursimcoin.tourismcoin_android.network.TourismCoinService;
 
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity
 
     private RecyclerView mRecyclerView;
     private SightseeingAdapter mAdapter;
+    private SalesAdapter mSalesAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     Toolbar toolbar;
@@ -162,6 +165,8 @@ public class MainActivity extends AppCompatActivity
 
         if(id == R.id.nav_scanner){
             scanQR();
+        }else if(id == R.id.nav_shop){
+            mainAdapter();
         }else if(id == R.id.nav_signOut){
             signOut();
         }
@@ -220,5 +225,13 @@ public class MainActivity extends AppCompatActivity
         }
         level_bar.setProgress(progress);
         level_label.setText(String.valueOf(level));
+    }
+
+    public void mainAdapter(){
+        List<Sale> sales = new ArrayList<>();
+        sales.add(new Sale("Free wine tasting", "Free wine tasting just for 50 coins", "https://www.natehartstudios.com/wp-content/uploads/2017/12/dark-wine-e1514120141686.jpg", 50));
+        sales.add(new Sale("Tbilisi City Sightseeing", "Enjoy ride around tbilis just for 60 coin", "https://hohobassets.isango.com/productimages/product/22573/tbilisi_27716_5.jpg",60));
+        mSalesAdapter = new SalesAdapter(sales);
+        mRecyclerView.setAdapter(mSalesAdapter);
     }
 }
