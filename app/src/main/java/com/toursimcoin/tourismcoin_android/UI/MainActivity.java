@@ -15,9 +15,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.toursimcoin.tourismcoin_android.R;
 import com.toursimcoin.tourismcoin_android.heplers.Constants;
 import com.toursimcoin.tourismcoin_android.heplers.SharedPrefsUtil;
+import com.toursimcoin.tourismcoin_android.model.QRStatus;
+
+import org.json.JSONObject;
 
 import in.mrasif.libs.easyqr.EasyQR;
 import in.mrasif.libs.easyqr.QRScanner;
@@ -92,6 +96,8 @@ public class MainActivity extends AppCompatActivity
 
         if(id == R.id.nav_scanner){
             scanQR();
+        }else if(id == R.id.nav_signOut){
+            signOut();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -121,7 +127,9 @@ public class MainActivity extends AppCompatActivity
         switch (requestCode){
             case EasyQR.QR_SCANNER_REQUEST: {
                 if (resultCode==RESULT_OK){
-                    Toast.makeText(this, data.getStringExtra(EasyQR.DATA), Toast.LENGTH_SHORT).show();
+                    Gson gson = new Gson();
+                    QRStatus status = gson.fromJson(data.getStringExtra(EasyQR.DATA), QRStatus.class);
+                    
                 }
             } break;
         }
