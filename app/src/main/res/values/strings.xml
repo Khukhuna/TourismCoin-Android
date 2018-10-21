@@ -16,4 +16,6 @@
     <string name="settings">Settings</string>
     <string name="scan">Scan the QR</string>
     <string name="citys">Citys</string>
+    <string name="Sightseeings">Sightseeings</string>
+    <string name="shop">Shop</string>
 </resources>

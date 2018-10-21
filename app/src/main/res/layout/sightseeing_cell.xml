@@ -13,13 +13,31 @@
         android:id="@+id/sightseeing_image"/>
 
     <TextView
+        android:layout_width="30dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@id/sightseeing_image"
+        app:layout_constraintLeft_toLeftOf="@id/sightseeing_image"
+        android:background="@drawable/rouded_bg"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingStart="7dp"
+        android:paddingEnd="7dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/sightseeing_points"
+        />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
         android:background="#90000000"
         android:gravity="center"
         android:padding="10dp"
-        android:text=""
+        android:textStyle="bold"
         android:id="@+id/sightseeing_title"
         app:layout_constraintBottom_toBottomOf="@id/sightseeing_image"/>
 

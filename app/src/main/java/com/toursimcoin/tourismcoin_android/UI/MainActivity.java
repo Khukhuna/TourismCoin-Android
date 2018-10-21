@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity
                 List<Sightseeing> data = response.body();
                 if(data != null){
                     mAdapter.addItems(data);
+                    Toast.makeText(MainActivity.this, data.get(0).description, Toast.LENGTH_SHORT).show();
                 }
             }
 
