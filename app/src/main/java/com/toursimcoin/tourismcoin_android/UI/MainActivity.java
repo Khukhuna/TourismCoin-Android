@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +55,11 @@ public class MainActivity extends AppCompatActivity
 
     Toolbar toolbar;
 
+    SeekBar level_bar;
+    TextView level_label;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +69,11 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
+
+        level_bar = headerView.findViewById(R.id.navbar_level);
+        level_label = headerView.findViewById(R.id.level_indic);
+        level_bar.setProgress(85);
+        level_bar.setEnabled(true);
 
         mRecyclerView = findViewById(R.id.ccrecycler);
         mRecyclerView.setHasFixedSize(true);
@@ -195,5 +208,17 @@ public class MainActivity extends AppCompatActivity
         int balance = Integer.valueOf(balanceBar.getTitle().toString());
         balance = balance + points;
         balanceBar.setTitle(String.valueOf(balance));
+
+        int progress = level_bar.getProgress();
+        int level = Integer.valueOf(level_label.getText().toString());
+        if(progress + (points*10) > 100){
+            level+=1;
+            progress = (progress-100)*-1;
+            Snackbar.make(findViewById(R.id.content_main), "Congratulations! You leveled up", Snackbar.LENGTH_LONG).show();
+        }else {
+            progress += (points*10);
+        }
+        level_bar.setProgress(progress);
+        level_label.setText(String.valueOf(level));
     }
 }

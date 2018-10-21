@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/coin_amount"
-        android:title="80"
+        android:title="0"
         app:showAsAction="always"
         android:orderInCategory="101"
         />
