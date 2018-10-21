@@ -173,10 +173,10 @@ public class MainActivity extends AppCompatActivity
 
 
     public void signOut(){
-        SharedPrefsUtil.setStringPreference(this, Constants.FIRSTNAME, "");
-        SharedPrefsUtil.setStringPreference(this, Constants.LASTNAME, "");
-        SharedPrefsUtil.setStringPreference(this, Constants.MAIL, "");
-        SharedPrefsUtil.setStringPreference(this, Constants.USERNAME, "");
+        SharedPrefsUtil.setStringPreference(this, Constants.FIRSTNAME, null);
+        SharedPrefsUtil.setStringPreference(this, Constants.LASTNAME, null);
+        SharedPrefsUtil.setStringPreference(this, Constants.MAIL, null);
+        SharedPrefsUtil.setStringPreference(this, Constants.USERNAME, null);
 
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
